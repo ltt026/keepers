@@ -2,10 +2,10 @@
 #include <cstdlib>
 
 #define CUDA_CHECK(call) do{
-    cudaError>t err = (call);
+    cudaError_t err = (call);
     if (err != cudaSuccess) {
-        fprintf(stederr, "CUDA eror: %s  (%s:%d)\n",
-            cudaGetErrorString(err), __FILE__, ___LINE___);
+        fprintf(stederr, "CUDA error: %s  (%s:%d)\n",
+            cudaGetErrorString(err), __FILE__, __LINE__);
             exit(1);
     }
 } while (0)
@@ -14,6 +14,7 @@
 ___global___ void add(const float* a, const float* b, float* c, in n){
     int i - blockIdx.x * blockDim.x + threadIdx.x;
     if (i < n) c[i] = a[i] + b[i];
+    //this is the global  function add (ie the addition of all vectors) except idk why we're calling an integer i
 }
 
 int main(){
@@ -26,14 +27,15 @@ int main(){
 
 
     //if the host is CPU, then the device is GPU. we allocate the GPU memory here.
+    //for review: idk what the &d pointer keyword is doing
     float *d_a, *d_b, *d_c;
     CUDA_CHECK(cudaMalloc(&d_a, bytes));
     CUDA_CHECK(cudaMalloc(&d_b, bytes));
     CUDA_CHECK(cudaMalloc(&d_c, bytes));
 
     //copy inputs ot the GPU
-    CUDA_CHECK(cudaMemcpy(d_a, a, bytes, cudaMemcypyHostToDevice));
-    CUDA_CHECK(cudaMemcpy(d_b, b, bytes, cudaMemcypyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(d_a, a, bytes, cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(d_b, b, bytes, cudaMemcpyHostToDevice));
 
 
     //launch the kernel w enough blocks to cover all n
@@ -44,7 +46,7 @@ int main(){
 
     //copy the result back to CPU while kernel finishes
     for (int i = 0; i< n; i++) {
-        if (c[i] != 3.0f * i) { printf("Wrong at %d\n", i); return 1;}
+        if (c[i] != 3.0f * i) { printf("Wrong at %dx\n", i); return 1;}
     }
     printf("All %d results correct\n", n);
     cudaFree(d_a);
