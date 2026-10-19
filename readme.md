@@ -15,4 +15,4 @@ CUDA.
 
 the problem is, I'm highly incompetent.
 
-current progress: learning how to write CUDA kernels by hand
+current progress: exposure module n training
