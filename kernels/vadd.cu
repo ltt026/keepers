@@ -11,8 +11,8 @@
 } while (0)\
 
 
-___global___ void add(const float* a, const float* b, float* c, in n){
-    int i - blockIdx.x * blockDim.x + threadIdx.x;
+__global__ void add(const float* a, const float* b, float* c, int n){
+    int i =blockIdx.x * blockDim.x + threadIdx.x;
     if (i < n) c[i] = a[i] + b[i];
     //this is the global  function add (ie the addition of all vectors) except idk why we're calling an integer i
 }
