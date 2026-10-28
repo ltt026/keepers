@@ -49,9 +49,7 @@ int main(){
         if (c[i] != 3.0f * i) { printf("Wrong at %dx\n", i); return 1;}
     }
     printf("All %d results correct\n", n);
-    cudaFree(d_a);
-    cudaFree(d_b);  
-    cudaFree(d_c);
+    cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
     free (a); free(b); free(c);
     return 0;
-    }
+}
