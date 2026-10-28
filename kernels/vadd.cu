@@ -16,7 +16,7 @@ __global__ void add(const float* a, const float* b, float* c, int n) {
     if (i < n) c[i] = a[i] + b[i];      // the grid may have extra threads; they do nothing
 }
 
-int main() {=
+int main() {
     // erm we finna add gpu timers. 
     cudaEvent_t start, stop;
     cudaEventCreate(&start);
@@ -31,7 +31,7 @@ int main() {=
     cudaEventElaspedTime(&ms, start, stop);
     printf("Kernel took .%.3f ms \n", ms);
 
-    
+
 
 
 
