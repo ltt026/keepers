@@ -16,8 +16,28 @@ __global__ void add(const float* a, const float* b, float* c, int n) {
     if (i < n) c[i] = a[i] + b[i];      // the grid may have extra threads; they do nothing
 }
 
-int main() {
-    int n = 1 << 20;                    // 1,048,576 numbers
+int main() {=
+    // erm we finna add gpu timers. 
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+
+    cudaEventRecord(start);
+    add<<<blocks, threads>>>(d_a, d_b, d_c, n);
+    cudaEventRecord(stop);
+    cudaEventSynchronize(stop);
+    
+    float ms = 0;
+    cudaEventElaspedTime(&ms, start, stop);
+    printf("Kernel took .%.3f ms \n", ms);
+
+    
+
+
+
+
+
+    int n = 1 << 20;                    // 1,048,576 numbers hopefully
     size_t bytes = n * sizeof(float);
 
     // 1. Host (CPU) memory
@@ -30,7 +50,7 @@ int main() {
     CUDA_CHECK(cudaMalloc(&d_b, bytes));
     CUDA_CHECK(cudaMalloc(&d_c, bytes));
 
-    // 3. Copy inputs to the GPU
+    // 3. Copy inputs to gpu device
     CUDA_CHECK(cudaMemcpy(d_a, a, bytes, cudaMemcpyHostToDevice));
     CUDA_CHECK(cudaMemcpy(d_b, b, bytes, cudaMemcpyHostToDevice));
 
