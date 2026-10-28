@@ -1,4 +1,4 @@
-%%writefile vadd.cu
+
 #include <cstdio>
 #include <cstdlib>
 
