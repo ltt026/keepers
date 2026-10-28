@@ -1,14 +1,14 @@
 #include <cstdio>
 #include <cstdlib>
 
-#define CUDA_CHECK(call) do{
-    cudaError_t err = (call);
-    if (err != cudaSuccess) {
-        fprintf(stederr, "CUDA error: %s  (%s:%d)\n",
-            cudaGetErrorString(err), __FILE__, __LINE__);
-            exit(1);
-    }
-} while (0)
+#define CUDA_CHECK(call) do { \
+    cudaError_t err = (call); \
+    if (err != cudaSuccess) { \
+        fprintf(stederr, "CUDA error: %s  (%s:%d)\n", \
+            cudaGetErrorString(err), __FILE__, __LINE__);\
+            exit(1);\
+    }\
+} while (0)\
 
 
 ___global___ void add(const float* a, const float* b, float* c, in n){
