@@ -15,4 +15,4 @@ CUDA.
 
 the problem is, I'm highly incompetent.
 
-current progress: exposure module n training
+current progress: understanding kernel timing n basics
