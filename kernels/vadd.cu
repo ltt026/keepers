@@ -30,8 +30,15 @@ int main() {
     CUDA_CHECK(cudaMalloc(&d_c, bytes));
 
     // 3. Copy inputs to the GPU
+    CUDA_CHECK(cudaEventRecord(start));
     CUDA_CHECK(cudaMemcpy(d_a, a, bytes, cudaMemcpyHostToDevice));
     CUDA_CHECK(cudaMemcpy(d_b, b, bytes, cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaEventRecord(stop));
+    CUDA_CHECK(cudaEventSynchronize(stop));
+
+    float in_ms= 0;
+    CUDA_CHECK(cudaEventElapsedTime(&in_ms, start, stop));
+    printf("copy in took %.3f ms\n", in_ms")
 
     // 4. Launch enough blocks to cover n (round up), timed with GPU events
     int threads = 256;
@@ -58,7 +65,10 @@ int main() {
         if (c[i] != 3.0f * i) { printf("Wrong at %d\n", i); return 1; }
     }
     printf("All %d results correct\n", n);
-
+    printf("Copy in : %.1f GB/s\n", 2.0 * bytes / (in_ms   * 1e6));  // two arrays in
+    printf("Kernel  : %.1f GB/s\n", 3.0 * bytes / (ms      * 1e6));  // reads a, b; writes c
+    printf("Copy out: %.1f GB/s\n", 1.0 * bytes / (out_ms  * 1e6));  // one array out
+    
     // Cleanup
     CUDA_CHECK(cudaEventDestroy(start));
     CUDA_CHECK(cudaEventDestroy(stop));
