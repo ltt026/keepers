@@ -1,4 +1,3 @@
-```cuda-cpp
 #include <cstdio>
 #include <cstdlib>
 
@@ -67,4 +66,3 @@ int main() {
     free(a); free(b); free(c);
     return 0;
 }
-```
