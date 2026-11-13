@@ -68,7 +68,12 @@ int main() {
     printf("Copy in : %.1f GB/s\n", 2.0 * bytes / (in_ms   * 1e6));  // two arrays in
     printf("Kernel  : %.1f GB/s\n", 3.0 * bytes / (ms      * 1e6));  // reads a, b; writes c
     printf("Copy out: %.1f GB/s\n", 1.0 * bytes / (out_ms  * 1e6));  // one array out
-    
+
+    // my guess is that the copy in will be slower because it's processing things via pcie, n that 
+    //Copy in	8.4 MB ÷ ~10 GB/s ≈ 0.8 ms
+    //Copy out	4.2 MB ÷ ~10 GB/s ≈ 0.4 ms
+    //Kernel	12.6 MB ÷ ~250 GB/s ≈ 0.05 ms
+
     // Cleanup
     CUDA_CHECK(cudaEventDestroy(start));
     CUDA_CHECK(cudaEventDestroy(stop));
