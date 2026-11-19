@@ -38,7 +38,7 @@ int main() {
 
     float in_ms= 0;
     CUDA_CHECK(cudaEventElapsedTime(&in_ms, start, stop));
-    printf("copy in took %.3f ms\n", in_ms")
+    printf("copy in took %.3f ms\n", in_ms);
 
     // 4. Launch enough blocks to cover n (round up), timed with GPU events
     int threads = 256;
