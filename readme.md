@@ -2,7 +2,7 @@ this is a work in progress!
 ---------------------------
 did you ever have like-
 
-say  7,143 photos in your iCloud and highkey at least 30% of them are hot ahh?
+say  7,892 photos in your iCloud and highkey at least 30% of them are hot ahh?
 
 well, that's me
 
