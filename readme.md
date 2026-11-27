@@ -16,3 +16,6 @@ CUDA.
 the problem is, I'm highly incompetent.
 
 current progress: understanding kernel timing n basics
+
+
+ / development canceled and shifting to different project. 
